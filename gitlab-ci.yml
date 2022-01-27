@@ -1,0 +1,27 @@
+image: 
+  name: registry.gitlab.com/enbuild-staging/hardened-gitlab-runner:latest
+
+variables:
+  GIT_SUBMODULE_STRATEGY: recursive
+
+before_script:
+  - ls -l .
+
+stages:
+    - deploy
+    - destroy
+
+deploy-kubeflow:
+    stage: deploy
+    script: ./deploy.sh
+    rules:
+        # Enabled CI pipeline testing it commit message contains "run-ci"
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_MESSAGE =~ /.*run-ci.*/i
+
+destroy-kubeflow:
+    stage: destroy
+    script: ./destroy.sh
+    rules:
+        # Enabled CI pipeline testing it commit message contains "run-ci"
+    - if: $CI_PIPELINE_SOURCE == "push" && $CI_COMMIT_MESSAGE =~ /.*run-ci.*/i
+      when: manual
