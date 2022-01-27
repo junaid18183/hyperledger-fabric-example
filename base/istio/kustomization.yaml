@@ -1,0 +1,5 @@
+namespace: istio-system
+bases:
+  - istio-namespace.yaml
+  - istio.yaml
+  - public-gateway.yaml

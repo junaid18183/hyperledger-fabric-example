@@ -1,0 +1,4 @@
+namespace: hlf-operator
+bases:
+  - namespace.yaml
+  - hlf-operator.yaml

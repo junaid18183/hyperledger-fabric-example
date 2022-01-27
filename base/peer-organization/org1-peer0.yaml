@@ -1,0 +1,112 @@
+apiVersion: hlf.kungfusoftware.es/v1alpha1
+kind: FabricPeer
+metadata:
+  creationTimestamp: null
+  name: org1-peer0
+  namespace: fabric
+spec:
+  couchDBexporter: null
+  couchdb:
+    externalCouchDB: null
+    password: couchdb
+    user: couchdb
+  discovery:
+    period: 60s
+    touchPeriod: 60s
+  dockerSocketPath: ""
+  external_chaincode_builder: true
+  externalBuilders: null
+  externalEndpoint: ""
+  gossip:
+    bootstrap: ""
+    endpoint: ""
+    externalEndpoint: ""
+    orgLeader: false
+    useLeaderElection: true
+  hostAliases: null
+  hosts: []
+  image: quay.io/kfsoftware/fabric-peer
+  imagePullPolicy: Always
+  istio:
+    ingressGateway: ingressgateway
+    port: 443
+  logging:
+    cauthdsl: info
+    gossip: info
+    grpc: info
+    ledger: info
+    level: info
+    msp: info
+    peer: info
+    policies: info
+  mspID: Org1MSP
+  replicas: 1
+  resources:
+    chaincode:
+      limits:
+        cpu: "1"
+        memory: 100Mi
+      requests:
+        cpu: 10m
+        memory: 10m
+    couchdb:
+      limits:
+        cpu: "1"
+        memory: 512Mi
+      requests:
+        cpu: 10m
+        memory: 10m
+    couchdbExporter: null
+    peer:
+      limits:
+        cpu: "1"
+        memory: 512Mi
+      requests:
+        cpu: 10m
+        memory: 128Mi
+  secret:
+    enrollment:
+      component:
+        cahost: 54.89.160.237
+        caname: ca
+        caport: 31149
+        catls:
+          cacert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNUakNDQWZPZ0F3SUJBZ0lSQUtCSGw1SStZME5mbUFReFhjM2NTSFl3Q2dZSUtvWkl6ajBFQXdJd1VqRVQKTUJFR0ExVUVCaE1LUTJGc2FXWnZjbTVwWVRFSk1BY0dBMVVFQnhNQU1Ra3dCd1lEVlFRSkV3QXhGREFTQmdOVgpCQW9UQzBoNWNHVnliR1ZrWjJWeU1ROHdEUVlEVlFRTEV3WkdZV0p5YVdNd0hoY05Nakl3TVRJMU1USXhNRFE0CldoY05Nekl3TVRJMk1USXhNRFE0V2pCU01STXdFUVlEVlFRR0V3cERZV3hwWm05eWJtbGhNUWt3QndZRFZRUUgKRXdBeENUQUhCZ05WQkFrVEFERVVNQklHQTFVRUNoTUxTSGx3WlhKc1pXUm5aWEl4RHpBTkJnTlZCQXNUQmtaaApZbkpwWXpCWk1CTUdCeXFHU000OUFnRUdDQ3FHU000OUF3RUhBMElBQk5pUTFMbEx2WHNXLzdsMk9PdG5iQ2ZWCmtXU2Y1a3grZUtnK3R6ci9FQU1pOHFyRG1rSlU4dFIvVFZEclVYMlpLMm5hcW9IY3JGVEM2OERsb0lEZEViNmoKZ2Frd2dhWXdEZ1lEVlIwUEFRSC9CQVFEQWdHbU1CMEdBMVVkSlFRV01CUUdDQ3NHQVFVRkJ3TUNCZ2dyQmdFRgpCUWNEQVRBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUNrR0ExVWREZ1FpQkNBdVRtZFA0eCt5ckVGNVBFNnAxbllzCkpCcnd6djlnekI3NzM4b0lsTmhFeERBNUJnTlZIUkVFTWpBd2dnbHNiMk5oYkdodmMzU0NCMjl5WnpFdFkyR0MKRG05eVp6RXRZMkV1Wm1GaWNtbGpod1IvQUFBQmh3UTJXYUR0TUFvR0NDcUdTTTQ5QkFNQ0Ewa0FNRVlDSVFEOAo2SnNGRkE0aUVrbVRsekorMHFsMUxVbytDUmp6TzdaRElWTG9QK3pOV3dJaEFPV1Rpc1Vncnl6Mi9aOTZtYjlaCktYNTF4Y1JMWE9lSDdWVEgvTFE4enU2QQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+        enrollid: peer
+        enrollsecret: peerpw
+      tls:
+        cahost: 54.89.160.237
+        caname: tlsca
+        caport: 31149
+        catls:
+          cacert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNUakNDQWZPZ0F3SUJBZ0lSQUtCSGw1SStZME5mbUFReFhjM2NTSFl3Q2dZSUtvWkl6ajBFQXdJd1VqRVQKTUJFR0ExVUVCaE1LUTJGc2FXWnZjbTVwWVRFSk1BY0dBMVVFQnhNQU1Ra3dCd1lEVlFRSkV3QXhGREFTQmdOVgpCQW9UQzBoNWNHVnliR1ZrWjJWeU1ROHdEUVlEVlFRTEV3WkdZV0p5YVdNd0hoY05Nakl3TVRJMU1USXhNRFE0CldoY05Nekl3TVRJMk1USXhNRFE0V2pCU01STXdFUVlEVlFRR0V3cERZV3hwWm05eWJtbGhNUWt3QndZRFZRUUgKRXdBeENUQUhCZ05WQkFrVEFERVVNQklHQTFVRUNoTUxTSGx3WlhKc1pXUm5aWEl4RHpBTkJnTlZCQXNUQmtaaApZbkpwWXpCWk1CTUdCeXFHU000OUFnRUdDQ3FHU000OUF3RUhBMElBQk5pUTFMbEx2WHNXLzdsMk9PdG5iQ2ZWCmtXU2Y1a3grZUtnK3R6ci9FQU1pOHFyRG1rSlU4dFIvVFZEclVYMlpLMm5hcW9IY3JGVEM2OERsb0lEZEViNmoKZ2Frd2dhWXdEZ1lEVlIwUEFRSC9CQVFEQWdHbU1CMEdBMVVkSlFRV01CUUdDQ3NHQVFVRkJ3TUNCZ2dyQmdFRgpCUWNEQVRBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUNrR0ExVWREZ1FpQkNBdVRtZFA0eCt5ckVGNVBFNnAxbllzCkpCcnd6djlnekI3NzM4b0lsTmhFeERBNUJnTlZIUkVFTWpBd2dnbHNiMk5oYkdodmMzU0NCMjl5WnpFdFkyR0MKRG05eVp6RXRZMkV1Wm1GaWNtbGpod1IvQUFBQmh3UTJXYUR0TUFvR0NDcUdTTTQ5QkFNQ0Ewa0FNRVlDSVFEOAo2SnNGRkE0aUVrbVRsekorMHFsMUxVbytDUmp6TzdaRElWTG9QK3pOV3dJaEFPV1Rpc1Vncnl6Mi9aOTZtYjlaCktYNTF4Y1JMWE9lSDdWVEgvTFE4enU2QQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==
+        csr:
+          cn: ""
+          hosts:
+          - 127.0.0.1
+          - localhost
+          - 54.89.160.237
+          - org1-peer0
+          - org1-peer0.fabric
+        enrollid: peer
+        enrollsecret: peerpw
+  service:
+    type: NodePort
+  serviceMonitor: null
+  stateDb: couchdb
+  storage:
+    chaincode:
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      storageClass: ""
+    couchdb:
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      storageClass: ""
+    peer:
+      accessMode: ReadWriteOnce
+      size: 5Gi
+      storageClass: ""
+  tag: 2.4.1-v0.0.3
+  updateCertificateTime: null
+

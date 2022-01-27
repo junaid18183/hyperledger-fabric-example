@@ -1,0 +1,2870 @@
+---
+# Source: hlf-operator/templates/crds/hlf.kungfusoftware.es_fabriccas.yaml
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.3.0
+  creationTimestamp: null
+  name: fabriccas.hlf.kungfusoftware.es
+spec:
+  group: hlf.kungfusoftware.es
+  names:
+    kind: FabricCA
+    listKind: FabricCAList
+    plural: fabriccas
+    shortNames:
+    - ca
+    singular: ca
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.status
+      name: State
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: FabricCA is the Schema for the hlfs API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: FabricCASpec defines the desired state of FabricCA
+            properties:
+              ca:
+                properties:
+                  bccsp:
+                    properties:
+                      default:
+                        default: SW
+                        type: string
+                      sw:
+                        properties:
+                          hash:
+                            default: SHA2
+                            type: string
+                          security:
+                            default: "256"
+                            type: string
+                        required:
+                        - hash
+                        - security
+                        type: object
+                    required:
+                    - default
+                    - sw
+                    type: object
+                  ca:
+                    nullable: true
+                    properties:
+                      cert:
+                        type: string
+                      chain:
+                        type: string
+                      key:
+                        type: string
+                    required:
+                    - cert
+                    - chain
+                    - key
+                    type: object
+                  cfg:
+                    properties:
+                      affiliations:
+                        properties:
+                          allowRemove:
+                            default: true
+                            type: boolean
+                        required:
+                        - allowRemove
+                        type: object
+                      identities:
+                        properties:
+                          allowRemove:
+                            default: true
+                            type: boolean
+                        required:
+                        - allowRemove
+                        type: object
+                    required:
+                    - affiliations
+                    - identities
+                    type: object
+                  crl:
+                    properties:
+                      expiry:
+                        default: 24h
+                        type: string
+                    required:
+                    - expiry
+                    type: object
+                  csr:
+                    properties:
+                      ca:
+                        properties:
+                          expiry:
+                            default: 131400h
+                            type: string
+                          pathLength:
+                            default: 0
+                            type: integer
+                        required:
+                        - expiry
+                        - pathLength
+                        type: object
+                      cn:
+                        default: ca
+                        type: string
+                      hosts:
+                        default:
+                        - localhost
+                        items:
+                          type: string
+                        type: array
+                      names:
+                        items:
+                          properties:
+                            C:
+                              default: US
+                              type: string
+                            L:
+                              default: Raleigh
+                              type: string
+                            O:
+                              default: Hyperledger
+                              type: string
+                            OU:
+                              default: Fabric
+                              type: string
+                            ST:
+                              default: North Carolina
+                              type: string
+                          required:
+                          - C
+                          - L
+                          - O
+                          - OU
+                          - ST
+                          type: object
+                        type: array
+                    required:
+                    - ca
+                    - cn
+                    - hosts
+                    - names
+                    type: object
+                  intermediate:
+                    properties:
+                      parentServer:
+                        properties:
+                          caName:
+                            type: string
+                          url:
+                            type: string
+                        required:
+                        - caName
+                        - url
+                        type: object
+                    required:
+                    - parentServer
+                    type: object
+                  name:
+                    type: string
+                  registry:
+                    properties:
+                      identities:
+                        items:
+                          properties:
+                            affiliation:
+                              default: ""
+                              type: string
+                            attrs:
+                              properties:
+                                hf.AffiliationMgr:
+                                  default: true
+                                  type: boolean
+                                hf.GenCRL:
+                                  default: true
+                                  type: boolean
+                                hf.IntermediateCA:
+                                  default: true
+                                  type: boolean
+                                hf.Registrar.Attributes:
+                                  default: '*'
+                                  type: string
+                                hf.Registrar.DelegateRoles:
+                                  default: '*'
+                                  type: string
+                                hf.Registrar.Roles:
+                                  default: '*'
+                                  type: string
+                                hf.Revoker:
+                                  default: true
+                                  type: boolean
+                              required:
+                              - hf.AffiliationMgr
+                              - hf.GenCRL
+                              - hf.IntermediateCA
+                              - hf.Registrar.Attributes
+                              - hf.Registrar.DelegateRoles
+                              - hf.Registrar.Roles
+                              - hf.Revoker
+                              type: object
+                            name:
+                              type: string
+                            pass:
+                              type: string
+                            type:
+                              type: string
+                          required:
+                          - affiliation
+                          - attrs
+                          - name
+                          - pass
+                          - type
+                          type: object
+                        type: array
+                      max_enrollments:
+                        type: integer
+                    required:
+                    - identities
+                    - max_enrollments
+                    type: object
+                  subject:
+                    properties:
+                      C:
+                        default: US
+                        type: string
+                      L:
+                        default: Raleigh
+                        type: string
+                      O:
+                        default: Hyperledger
+                        type: string
+                      OU:
+                        default: Fabric
+                        type: string
+                      ST:
+                        default: North Carolina
+                        type: string
+                      cn:
+                        default: ca
+                        type: string
+                    required:
+                    - C
+                    - L
+                    - O
+                    - OU
+                    - ST
+                    - cn
+                    type: object
+                  tlsCa:
+                    nullable: true
+                    properties:
+                      cert:
+                        type: string
+                      clientAuth:
+                        properties:
+                          cert_file:
+                            items:
+                              type: string
+                            type: array
+                          type:
+                            description: NoClientCert, RequestClientCert, RequireAnyClientCert,
+                              VerifyClientCertIfGiven and RequireAndVerifyClientCert.
+                            type: string
+                        required:
+                        - cert_file
+                        - type
+                        type: object
+                      key:
+                        type: string
+                    required:
+                    - cert
+                    - clientAuth
+                    - key
+                    type: object
+                required:
+                - bccsp
+                - cfg
+                - crl
+                - csr
+                - intermediate
+                - name
+                - registry
+                - subject
+                type: object
+              clrSizeLimit:
+                default: 512000
+                type: integer
+              cors:
+                properties:
+                  enabled:
+                    default: false
+                    type: boolean
+                  origins:
+                    items:
+                      type: string
+                    type: array
+                required:
+                - enabled
+                - origins
+                type: object
+              db:
+                properties:
+                  datasource:
+                    type: string
+                  type:
+                    type: string
+                required:
+                - datasource
+                - type
+                type: object
+              debug:
+                default: false
+                type: boolean
+              hosts:
+                description: Hosts for the Fabric CA
+                items:
+                  type: string
+                minItems: 1
+                type: array
+              image:
+                minLength: 1
+                type: string
+              istio:
+                nullable: true
+                properties:
+                  hosts:
+                    items:
+                      type: string
+                    nullable: true
+                    type: array
+                  ingressGateway:
+                    type: string
+                  port:
+                    nullable: true
+                    type: integer
+                required:
+                - ingressGateway
+                type: object
+              metrics:
+                properties:
+                  provider:
+                    default: disabled
+                    type: string
+                  statsd:
+                    properties:
+                      address:
+                        type: string
+                      network:
+                        default: udp
+                        enum:
+                        - udp
+                        - tcp
+                        type: string
+                      prefix:
+                        default: ""
+                        type: string
+                      writeInterval:
+                        default: 10s
+                        type: string
+                    required:
+                    - network
+                    type: object
+                required:
+                - provider
+                type: object
+              resources:
+                description: ResourceRequirements describes the compute resource requirements.
+                properties:
+                  limits:
+                    additionalProperties:
+                      anyOf:
+                      - type: integer
+                      - type: string
+                      pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                      x-kubernetes-int-or-string: true
+                    description: 'Limits describes the maximum amount of compute resources
+                      allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                    type: object
+                  requests:
+                    additionalProperties:
+                      anyOf:
+                      - type: integer
+                      - type: string
+                      pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                      x-kubernetes-int-or-string: true
+                    description: 'Requests describes the minimum amount of compute
+                      resources required. If Requests is omitted for a container,
+                      it defaults to Limits if that is explicitly specified, otherwise
+                      to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                    type: object
+                type: object
+              rootCA:
+                properties:
+                  subject:
+                    properties:
+                      C:
+                        default: US
+                        type: string
+                      L:
+                        default: Raleigh
+                        type: string
+                      O:
+                        default: Hyperledger
+                        type: string
+                      OU:
+                        default: Fabric
+                        type: string
+                      ST:
+                        default: North Carolina
+                        type: string
+                      cn:
+                        default: ca
+                        type: string
+                    required:
+                    - C
+                    - L
+                    - O
+                    - OU
+                    - ST
+                    - cn
+                    type: object
+                required:
+                - subject
+                type: object
+              service:
+                properties:
+                  type:
+                    description: Service Type string describes ingress methods for
+                      a service
+                    type: string
+                required:
+                - type
+                type: object
+              serviceMonitor:
+                nullable: true
+                properties:
+                  enabled:
+                    default: false
+                    type: boolean
+                  interval:
+                    default: 10s
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  sampleLimit:
+                    default: 0
+                    type: integer
+                  scrapeTimeout:
+                    default: 10s
+                    type: string
+                required:
+                - enabled
+                - interval
+                - sampleLimit
+                - scrapeTimeout
+                type: object
+              storage:
+                properties:
+                  accessMode:
+                    default: ReadWriteOnce
+                    type: string
+                  size:
+                    default: 5Gi
+                    type: string
+                  storageClass:
+                    default: ""
+                    type: string
+                required:
+                - accessMode
+                - size
+                type: object
+              tlsCA:
+                properties:
+                  bccsp:
+                    properties:
+                      default:
+                        default: SW
+                        type: string
+                      sw:
+                        properties:
+                          hash:
+                            default: SHA2
+                            type: string
+                          security:
+                            default: "256"
+                            type: string
+                        required:
+                        - hash
+                        - security
+                        type: object
+                    required:
+                    - default
+                    - sw
+                    type: object
+                  ca:
+                    nullable: true
+                    properties:
+                      cert:
+                        type: string
+                      chain:
+                        type: string
+                      key:
+                        type: string
+                    required:
+                    - cert
+                    - chain
+                    - key
+                    type: object
+                  cfg:
+                    properties:
+                      affiliations:
+                        properties:
+                          allowRemove:
+                            default: true
+                            type: boolean
+                        required:
+                        - allowRemove
+                        type: object
+                      identities:
+                        properties:
+                          allowRemove:
+                            default: true
+                            type: boolean
+                        required:
+                        - allowRemove
+                        type: object
+                    required:
+                    - affiliations
+                    - identities
+                    type: object
+                  crl:
+                    properties:
+                      expiry:
+                        default: 24h
+                        type: string
+                    required:
+                    - expiry
+                    type: object
+                  csr:
+                    properties:
+                      ca:
+                        properties:
+                          expiry:
+                            default: 131400h
+                            type: string
+                          pathLength:
+                            default: 0
+                            type: integer
+                        required:
+                        - expiry
+                        - pathLength
+                        type: object
+                      cn:
+                        default: ca
+                        type: string
+                      hosts:
+                        default:
+                        - localhost
+                        items:
+                          type: string
+                        type: array
+                      names:
+                        items:
+                          properties:
+                            C:
+                              default: US
+                              type: string
+                            L:
+                              default: Raleigh
+                              type: string
+                            O:
+                              default: Hyperledger
+                              type: string
+                            OU:
+                              default: Fabric
+                              type: string
+                            ST:
+                              default: North Carolina
+                              type: string
+                          required:
+                          - C
+                          - L
+                          - O
+                          - OU
+                          - ST
+                          type: object
+                        type: array
+                    required:
+                    - ca
+                    - cn
+                    - hosts
+                    - names
+                    type: object
+                  intermediate:
+                    properties:
+                      parentServer:
+                        properties:
+                          caName:
+                            type: string
+                          url:
+                            type: string
+                        required:
+                        - caName
+                        - url
+                        type: object
+                    required:
+                    - parentServer
+                    type: object
+                  name:
+                    type: string
+                  registry:
+                    properties:
+                      identities:
+                        items:
+                          properties:
+                            affiliation:
+                              default: ""
+                              type: string
+                            attrs:
+                              properties:
+                                hf.AffiliationMgr:
+                                  default: true
+                                  type: boolean
+                                hf.GenCRL:
+                                  default: true
+                                  type: boolean
+                                hf.IntermediateCA:
+                                  default: true
+                                  type: boolean
+                                hf.Registrar.Attributes:
+                                  default: '*'
+                                  type: string
+                                hf.Registrar.DelegateRoles:
+                                  default: '*'
+                                  type: string
+                                hf.Registrar.Roles:
+                                  default: '*'
+                                  type: string
+                                hf.Revoker:
+                                  default: true
+                                  type: boolean
+                              required:
+                              - hf.AffiliationMgr
+                              - hf.GenCRL
+                              - hf.IntermediateCA
+                              - hf.Registrar.Attributes
+                              - hf.Registrar.DelegateRoles
+                              - hf.Registrar.Roles
+                              - hf.Revoker
+                              type: object
+                            name:
+                              type: string
+                            pass:
+                              type: string
+                            type:
+                              type: string
+                          required:
+                          - affiliation
+                          - attrs
+                          - name
+                          - pass
+                          - type
+                          type: object
+                        type: array
+                      max_enrollments:
+                        type: integer
+                    required:
+                    - identities
+                    - max_enrollments
+                    type: object
+                  subject:
+                    properties:
+                      C:
+                        default: US
+                        type: string
+                      L:
+                        default: Raleigh
+                        type: string
+                      O:
+                        default: Hyperledger
+                        type: string
+                      OU:
+                        default: Fabric
+                        type: string
+                      ST:
+                        default: North Carolina
+                        type: string
+                      cn:
+                        default: ca
+                        type: string
+                    required:
+                    - C
+                    - L
+                    - O
+                    - OU
+                    - ST
+                    - cn
+                    type: object
+                  tlsCa:
+                    nullable: true
+                    properties:
+                      cert:
+                        type: string
+                      clientAuth:
+                        properties:
+                          cert_file:
+                            items:
+                              type: string
+                            type: array
+                          type:
+                            description: NoClientCert, RequestClientCert, RequireAnyClientCert,
+                              VerifyClientCertIfGiven and RequireAndVerifyClientCert.
+                            type: string
+                        required:
+                        - cert_file
+                        - type
+                        type: object
+                      key:
+                        type: string
+                    required:
+                    - cert
+                    - clientAuth
+                    - key
+                    type: object
+                required:
+                - bccsp
+                - cfg
+                - crl
+                - csr
+                - intermediate
+                - name
+                - registry
+                - subject
+                type: object
+              version:
+                minLength: 1
+                type: string
+            required:
+            - ca
+            - clrSizeLimit
+            - cors
+            - db
+            - debug
+            - hosts
+            - image
+            - metrics
+            - resources
+            - rootCA
+            - service
+            - storage
+            - tlsCA
+            - version
+            type: object
+          status:
+            description: FabricCAStatus defines the observed state of FabricCA
+            properties:
+              ca_cert:
+                description: Root certificate for Sign certificates generated by FabricCA
+                type: string
+              conditions:
+                description: Conditions is a set of Condition instances.
+                items:
+                  description: "Condition represents an observation of an object's
+                    state. Conditions are an extension mechanism intended to be used
+                    when the details of an observation are not a priori known or would
+                    not apply to all instances of a given Kind. \n Conditions should
+                    be added to explicitly convey properties that users and components
+                    care about rather than requiring those properties to be inferred
+                    from other observations. Once defined, the meaning of a Condition
+                    can not be changed arbitrarily - it becomes part of the API, and
+                    has the same backwards- and forwards-compatibility concerns of
+                    any other part of the API."
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      description: ConditionReason is intended to be a one-word, CamelCase
+                        representation of the category of cause of the current status.
+                        It is intended to be used in concise output, such as one-line
+                        kubectl get output, and in summarizing occurrences of causes.
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      description: "ConditionType is the type of the condition and
+                        is typically a CamelCased word or short phrase. \n Condition
+                        types should indicate state in the \"abnormal-true\" polarity.
+                        For example, if the condition indicates when a policy is invalid,
+                        the \"is valid\" case is probably the norm, so the condition
+                        should be called \"Invalid\"."
+                      type: string
+                  required:
+                  - status
+                  - type
+                  type: object
+                type: array
+              message:
+                type: string
+              nodePort:
+                type: integer
+              status:
+                description: Status of the FabricCA
+                type: string
+              tls_cert:
+                description: TLS Certificate to connect to the FabricCA
+                type: string
+              tlsca_cert:
+                description: Root certificate for TLS certificates generated by FabricCA
+                type: string
+            required:
+            - ca_cert
+            - conditions
+            - message
+            - status
+            - tls_cert
+            - tlsca_cert
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+---
+# Source: hlf-operator/templates/crds/hlf.kungfusoftware.es_fabricorderernodes.yaml
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.3.0
+  creationTimestamp: null
+  name: fabricorderernodes.hlf.kungfusoftware.es
+spec:
+  group: hlf.kungfusoftware.es
+  names:
+    kind: FabricOrdererNode
+    listKind: FabricOrdererNodeList
+    plural: fabricorderernodes
+    shortNames:
+    - orderernode
+    singular: orderernode
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.status
+      name: State
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: FabricOrdererNode is the Schema for the hlfs API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: FabricOrdererNodeSpec defines the desired state of FabricOrdererNode
+            properties:
+              adminIstio:
+                nullable: true
+                properties:
+                  hosts:
+                    items:
+                      type: string
+                    nullable: true
+                    type: array
+                  ingressGateway:
+                    type: string
+                  port:
+                    nullable: true
+                    type: integer
+                required:
+                - ingressGateway
+                type: object
+              bootstrapMethod:
+                type: string
+              channelParticipationEnabled:
+                type: boolean
+              genesis:
+                type: string
+              hostAliases:
+                items:
+                  description: HostAlias holds the mapping between IP and hostnames
+                    that will be injected as an entry in the pod's hosts file.
+                  properties:
+                    hostnames:
+                      description: Hostnames for the above IP address.
+                      items:
+                        type: string
+                      type: array
+                    ip:
+                      description: IP address of the host file entry.
+                      type: string
+                  type: object
+                nullable: true
+                type: array
+              image:
+                minLength: 1
+                type: string
+              istio:
+                nullable: true
+                properties:
+                  hosts:
+                    items:
+                      type: string
+                    nullable: true
+                    type: array
+                  ingressGateway:
+                    type: string
+                  port:
+                    nullable: true
+                    type: integer
+                required:
+                - ingressGateway
+                type: object
+              mspID:
+                minLength: 3
+                type: string
+              pullPolicy:
+                default: IfNotPresent
+                description: PullPolicy describes a policy for if/when to pull a container
+                  image
+                type: string
+              replicas:
+                default: 1
+                type: integer
+              resources:
+                description: ResourceRequirements describes the compute resource requirements.
+                properties:
+                  limits:
+                    additionalProperties:
+                      anyOf:
+                      - type: integer
+                      - type: string
+                      pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                      x-kubernetes-int-or-string: true
+                    description: 'Limits describes the maximum amount of compute resources
+                      allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                    type: object
+                  requests:
+                    additionalProperties:
+                      anyOf:
+                      - type: integer
+                      - type: string
+                      pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                      x-kubernetes-int-or-string: true
+                    description: 'Requests describes the minimum amount of compute
+                      resources required. If Requests is omitted for a container,
+                      it defaults to Limits if that is explicitly specified, otherwise
+                      to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                    type: object
+                type: object
+              secret:
+                nullable: true
+                properties:
+                  enrollment:
+                    properties:
+                      component:
+                        properties:
+                          cahost:
+                            minLength: 1
+                            type: string
+                          caname:
+                            minLength: 1
+                            type: string
+                          caport:
+                            type: integer
+                          catls:
+                            properties:
+                              cacert:
+                                type: string
+                            required:
+                            - cacert
+                            type: object
+                          enrollid:
+                            minLength: 1
+                            type: string
+                          enrollsecret:
+                            minLength: 1
+                            type: string
+                        required:
+                        - cahost
+                        - caname
+                        - caport
+                        - catls
+                        - enrollid
+                        - enrollsecret
+                        type: object
+                      tls:
+                        properties:
+                          cahost:
+                            type: string
+                          caname:
+                            type: string
+                          caport:
+                            type: integer
+                          catls:
+                            properties:
+                              cacert:
+                                type: string
+                            required:
+                            - cacert
+                            type: object
+                          csr:
+                            properties:
+                              cn:
+                                type: string
+                              hosts:
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          enrollid:
+                            type: string
+                          enrollsecret:
+                            type: string
+                        required:
+                        - cahost
+                        - caname
+                        - caport
+                        - catls
+                        - enrollid
+                        - enrollsecret
+                        type: object
+                    required:
+                    - component
+                    - tls
+                    type: object
+                required:
+                - enrollment
+                type: object
+              service:
+                properties:
+                  nodePortOperations:
+                    type: integer
+                  nodePortRequest:
+                    type: integer
+                  type:
+                    description: Service Type string describes ingress methods for
+                      a service
+                    type: string
+                required:
+                - type
+                type: object
+              serviceMonitor:
+                nullable: true
+                properties:
+                  enabled:
+                    default: false
+                    type: boolean
+                  interval:
+                    default: 10s
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  sampleLimit:
+                    default: 0
+                    type: integer
+                  scrapeTimeout:
+                    default: 10s
+                    type: string
+                required:
+                - enabled
+                - interval
+                - sampleLimit
+                - scrapeTimeout
+                type: object
+              storage:
+                properties:
+                  accessMode:
+                    default: ReadWriteOnce
+                    type: string
+                  size:
+                    default: 5Gi
+                    type: string
+                  storageClass:
+                    default: ""
+                    type: string
+                required:
+                - accessMode
+                - size
+                type: object
+              tag:
+                minLength: 1
+                type: string
+              updateCertificateTime:
+                format: date-time
+                nullable: true
+                type: string
+            required:
+            - bootstrapMethod
+            - channelParticipationEnabled
+            - genesis
+            - image
+            - mspID
+            - replicas
+            - resources
+            - service
+            - storage
+            - tag
+            type: object
+          status:
+            description: FabricOrdererNodeStatus defines the observed state of FabricOrdererNode
+            properties:
+              adminPort:
+                type: integer
+              conditions:
+                description: Conditions is a set of Condition instances.
+                items:
+                  description: "Condition represents an observation of an object's
+                    state. Conditions are an extension mechanism intended to be used
+                    when the details of an observation are not a priori known or would
+                    not apply to all instances of a given Kind. \n Conditions should
+                    be added to explicitly convey properties that users and components
+                    care about rather than requiring those properties to be inferred
+                    from other observations. Once defined, the meaning of a Condition
+                    can not be changed arbitrarily - it becomes part of the API, and
+                    has the same backwards- and forwards-compatibility concerns of
+                    any other part of the API."
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      description: ConditionReason is intended to be a one-word, CamelCase
+                        representation of the category of cause of the current status.
+                        It is intended to be used in concise output, such as one-line
+                        kubectl get output, and in summarizing occurrences of causes.
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      description: "ConditionType is the type of the condition and
+                        is typically a CamelCased word or short phrase. \n Condition
+                        types should indicate state in the \"abnormal-true\" polarity.
+                        For example, if the condition indicates when a policy is invalid,
+                        the \"is valid\" case is probably the norm, so the condition
+                        should be called \"Invalid\"."
+                      type: string
+                  required:
+                  - status
+                  - type
+                  type: object
+                type: array
+              lastCertificateUpdate:
+                format: date-time
+                nullable: true
+                type: string
+              message:
+                type: string
+              operationsPort:
+                type: integer
+              port:
+                type: integer
+              signCaCert:
+                type: string
+              signCert:
+                type: string
+              status:
+                type: string
+              tlsAdminCert:
+                type: string
+              tlsCaCert:
+                type: string
+              tlsCert:
+                type: string
+            required:
+            - conditions
+            - status
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+---
+# Source: hlf-operator/templates/crds/hlf.kungfusoftware.es_fabricorderingservices.yaml
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.3.0
+  creationTimestamp: null
+  name: fabricorderingservices.hlf.kungfusoftware.es
+spec:
+  group: hlf.kungfusoftware.es
+  names:
+    kind: FabricOrderingService
+    listKind: FabricOrderingServiceList
+    plural: fabricorderingservices
+    shortNames:
+    - orderingservice
+    singular: orderingservice
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.status
+      name: State
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: FabricOrderingService is the Schema for the hlfs API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: FabricOrderingServiceSpec defines the desired state of FabricOrderingService
+            properties:
+              enrollment:
+                properties:
+                  component:
+                    properties:
+                      cahost:
+                        minLength: 1
+                        type: string
+                      caname:
+                        minLength: 1
+                        type: string
+                      caport:
+                        type: integer
+                      catls:
+                        properties:
+                          cacert:
+                            type: string
+                        required:
+                        - cacert
+                        type: object
+                      enrollid:
+                        minLength: 1
+                        type: string
+                      enrollsecret:
+                        minLength: 1
+                        type: string
+                    required:
+                    - cahost
+                    - caname
+                    - caport
+                    - catls
+                    - enrollid
+                    - enrollsecret
+                    type: object
+                  tls:
+                    properties:
+                      cahost:
+                        type: string
+                      caname:
+                        type: string
+                      caport:
+                        type: integer
+                      catls:
+                        properties:
+                          cacert:
+                            type: string
+                        required:
+                        - cacert
+                        type: object
+                      csr:
+                        properties:
+                          cn:
+                            type: string
+                          hosts:
+                            items:
+                              type: string
+                            type: array
+                        type: object
+                      enrollid:
+                        type: string
+                      enrollsecret:
+                        type: string
+                    required:
+                    - cahost
+                    - caname
+                    - caport
+                    - catls
+                    - enrollid
+                    - enrollsecret
+                    type: object
+                required:
+                - component
+                - tls
+                type: object
+              image:
+                minLength: 1
+                type: string
+              mspID:
+                minLength: 3
+                type: string
+              nodes:
+                items:
+                  properties:
+                    enrollment:
+                      properties:
+                        tls:
+                          properties:
+                            csr:
+                              properties:
+                                cn:
+                                  type: string
+                                hosts:
+                                  items:
+                                    type: string
+                                  type: array
+                              type: object
+                          type: object
+                      required:
+                      - tls
+                      type: object
+                    host:
+                      type: string
+                    id:
+                      minLength: 1
+                      type: string
+                    port:
+                      type: integer
+                  required:
+                  - enrollment
+                  - id
+                  type: object
+                type: array
+              service:
+                properties:
+                  type:
+                    allOf:
+                    - enum:
+                      - NodePort
+                      - ClusterIP
+                      - LoadBalancer
+                    - enum:
+                      - NodePort
+                      - ClusterIP
+                      - LoadBalancer
+                    type: string
+                required:
+                - type
+                type: object
+              storage:
+                properties:
+                  accessMode:
+                    default: ReadWriteOnce
+                    type: string
+                  size:
+                    default: 5Gi
+                    type: string
+                  storageClass:
+                    default: ""
+                    type: string
+                required:
+                - accessMode
+                - size
+                type: object
+              systemChannel:
+                properties:
+                  config:
+                    properties:
+                      absoluteMaxBytes:
+                        type: integer
+                      applicationCapabilities:
+                        properties:
+                          V2_0:
+                            type: boolean
+                        required:
+                        - V2_0
+                        type: object
+                      batchTimeout:
+                        type: string
+                      channelCapabilities:
+                        properties:
+                          V2_0:
+                            type: boolean
+                        required:
+                        - V2_0
+                        type: object
+                      electionTick:
+                        type: integer
+                      heartbeatTick:
+                        type: integer
+                      maxInflightBlocks:
+                        type: integer
+                      maxMessageCount:
+                        type: integer
+                      ordererCapabilities:
+                        properties:
+                          V2_0:
+                            type: boolean
+                        required:
+                        - V2_0
+                        type: object
+                      preferredMaxBytes:
+                        type: integer
+                      snapshotIntervalSize:
+                        type: integer
+                      tickInterval:
+                        type: string
+                    required:
+                    - absoluteMaxBytes
+                    - applicationCapabilities
+                    - batchTimeout
+                    - channelCapabilities
+                    - electionTick
+                    - heartbeatTick
+                    - maxInflightBlocks
+                    - maxMessageCount
+                    - ordererCapabilities
+                    - preferredMaxBytes
+                    - snapshotIntervalSize
+                    - tickInterval
+                    type: object
+                  name:
+                    minLength: 3
+                    type: string
+                required:
+                - config
+                - name
+                type: object
+              tag:
+                minLength: 1
+                type: string
+            required:
+            - enrollment
+            - image
+            - mspID
+            - nodes
+            - service
+            - storage
+            - systemChannel
+            - tag
+            type: object
+          status:
+            description: FabricOrderingServiceStatus defines the observed state of
+              FabricOrderingService
+            properties:
+              conditions:
+                description: Conditions is a set of Condition instances.
+                items:
+                  description: "Condition represents an observation of an object's
+                    state. Conditions are an extension mechanism intended to be used
+                    when the details of an observation are not a priori known or would
+                    not apply to all instances of a given Kind. \n Conditions should
+                    be added to explicitly convey properties that users and components
+                    care about rather than requiring those properties to be inferred
+                    from other observations. Once defined, the meaning of a Condition
+                    can not be changed arbitrarily - it becomes part of the API, and
+                    has the same backwards- and forwards-compatibility concerns of
+                    any other part of the API."
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      description: ConditionReason is intended to be a one-word, CamelCase
+                        representation of the category of cause of the current status.
+                        It is intended to be used in concise output, such as one-line
+                        kubectl get output, and in summarizing occurrences of causes.
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      description: "ConditionType is the type of the condition and
+                        is typically a CamelCased word or short phrase. \n Condition
+                        types should indicate state in the \"abnormal-true\" polarity.
+                        For example, if the condition indicates when a policy is invalid,
+                        the \"is valid\" case is probably the norm, so the condition
+                        should be called \"Invalid\"."
+                      type: string
+                  required:
+                  - status
+                  - type
+                  type: object
+                type: array
+              status:
+                type: string
+            required:
+            - conditions
+            - status
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+---
+# Source: hlf-operator/templates/crds/hlf.kungfusoftware.es_fabricpeers.yaml
+apiVersion: apiextensions.k8s.io/v1
+kind: CustomResourceDefinition
+metadata:
+  annotations:
+    controller-gen.kubebuilder.io/version: v0.3.0
+  creationTimestamp: null
+  name: fabricpeers.hlf.kungfusoftware.es
+spec:
+  group: hlf.kungfusoftware.es
+  names:
+    kind: FabricPeer
+    listKind: FabricPeerList
+    plural: fabricpeers
+    shortNames:
+    - peer
+    singular: peer
+  scope: Namespaced
+  versions:
+  - additionalPrinterColumns:
+    - jsonPath: .status.status
+      name: State
+      type: string
+    - jsonPath: .metadata.creationTimestamp
+      name: Age
+      type: date
+    name: v1alpha1
+    schema:
+      openAPIV3Schema:
+        description: FabricPeer is the Schema for the hlfs API
+        properties:
+          apiVersion:
+            description: 'APIVersion defines the versioned schema of this representation
+              of an object. Servers should convert recognized schemas to the latest
+              internal value, and may reject unrecognized values. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#resources'
+            type: string
+          kind:
+            description: 'Kind is a string value representing the REST resource this
+              object represents. Servers may infer this from the endpoint the client
+              submits requests to. Cannot be updated. In CamelCase. More info: https://git.k8s.io/community/contributors/devel/sig-architecture/api-conventions.md#types-kinds'
+            type: string
+          metadata:
+            type: object
+          spec:
+            description: FabricPeerSpec defines the desired state of FabricPeer
+            properties:
+              couchDBexporter:
+                nullable: true
+                properties:
+                  enabled:
+                    default: false
+                    type: boolean
+                  image:
+                    default: gesellix/couchdb-prometheus-exporter
+                    type: string
+                  imagePullPolicy:
+                    default: IfNotPresent
+                    description: PullPolicy describes a policy for if/when to pull
+                      a container image
+                    type: string
+                  tag:
+                    default: v30.0.0
+                    type: string
+                required:
+                - enabled
+                - image
+                - imagePullPolicy
+                - tag
+                type: object
+              couchdb:
+                properties:
+                  externalCouchDB:
+                    nullable: true
+                    properties:
+                      enabled:
+                        type: boolean
+                      host:
+                        type: string
+                      port:
+                        type: integer
+                    required:
+                    - enabled
+                    - host
+                    - port
+                    type: object
+                  password:
+                    type: string
+                  user:
+                    type: string
+                required:
+                - password
+                - user
+                type: object
+              discovery:
+                properties:
+                  period:
+                    type: string
+                  touchPeriod:
+                    type: string
+                required:
+                - period
+                - touchPeriod
+                type: object
+              dockerSocketPath:
+                default: ""
+                type: string
+              external_chaincode_builder:
+                type: boolean
+              externalBuilders:
+                items:
+                  properties:
+                    name:
+                      type: string
+                    path:
+                      type: string
+                    propagateEnvironment:
+                      items:
+                        type: string
+                      nullable: true
+                      type: array
+                  required:
+                  - name
+                  - path
+                  type: object
+                nullable: true
+                type: array
+              externalEndpoint:
+                type: string
+              gossip:
+                properties:
+                  bootstrap:
+                    type: string
+                  endpoint:
+                    type: string
+                  externalEndpoint:
+                    type: string
+                  orgLeader:
+                    type: boolean
+                  useLeaderElection:
+                    type: boolean
+                required:
+                - bootstrap
+                - endpoint
+                - externalEndpoint
+                - orgLeader
+                - useLeaderElection
+                type: object
+              hostAliases:
+                items:
+                  description: HostAlias holds the mapping between IP and hostnames
+                    that will be injected as an entry in the pod's hosts file.
+                  properties:
+                    hostnames:
+                      description: Hostnames for the above IP address.
+                      items:
+                        type: string
+                      type: array
+                    ip:
+                      description: IP address of the host file entry.
+                      type: string
+                  type: object
+                nullable: true
+                type: array
+              hosts:
+                items:
+                  type: string
+                type: array
+              image:
+                minLength: 1
+                type: string
+              imagePullPolicy:
+                default: IfNotPresent
+                description: PullPolicy describes a policy for if/when to pull a container
+                  image
+                type: string
+              istio:
+                nullable: true
+                properties:
+                  hosts:
+                    items:
+                      type: string
+                    nullable: true
+                    type: array
+                  ingressGateway:
+                    type: string
+                  port:
+                    nullable: true
+                    type: integer
+                required:
+                - ingressGateway
+                type: object
+              logging:
+                properties:
+                  cauthdsl:
+                    type: string
+                  gossip:
+                    type: string
+                  grpc:
+                    type: string
+                  ledger:
+                    type: string
+                  level:
+                    type: string
+                  msp:
+                    type: string
+                  peer:
+                    type: string
+                  policies:
+                    type: string
+                required:
+                - cauthdsl
+                - gossip
+                - grpc
+                - ledger
+                - level
+                - msp
+                - peer
+                - policies
+                type: object
+              mspID:
+                minLength: 3
+                type: string
+              replicas:
+                default: 1
+                type: integer
+              resources:
+                properties:
+                  chaincode:
+                    description: ResourceRequirements describes the compute resource
+                      requirements.
+                    properties:
+                      limits:
+                        additionalProperties:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                        description: 'Limits describes the maximum amount of compute
+                          resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                        type: object
+                      requests:
+                        additionalProperties:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                        description: 'Requests describes the minimum amount of compute
+                          resources required. If Requests is omitted for a container,
+                          it defaults to Limits if that is explicitly specified, otherwise
+                          to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                        type: object
+                    type: object
+                  couchdb:
+                    description: ResourceRequirements describes the compute resource
+                      requirements.
+                    properties:
+                      limits:
+                        additionalProperties:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                        description: 'Limits describes the maximum amount of compute
+                          resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                        type: object
+                      requests:
+                        additionalProperties:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                        description: 'Requests describes the minimum amount of compute
+                          resources required. If Requests is omitted for a container,
+                          it defaults to Limits if that is explicitly specified, otherwise
+                          to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                        type: object
+                    type: object
+                  couchdbExporter:
+                    description: ResourceRequirements describes the compute resource
+                      requirements.
+                    nullable: true
+                    properties:
+                      limits:
+                        additionalProperties:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                        description: 'Limits describes the maximum amount of compute
+                          resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                        type: object
+                      requests:
+                        additionalProperties:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                        description: 'Requests describes the minimum amount of compute
+                          resources required. If Requests is omitted for a container,
+                          it defaults to Limits if that is explicitly specified, otherwise
+                          to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                        type: object
+                    type: object
+                  peer:
+                    description: ResourceRequirements describes the compute resource
+                      requirements.
+                    properties:
+                      limits:
+                        additionalProperties:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                        description: 'Limits describes the maximum amount of compute
+                          resources allowed. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                        type: object
+                      requests:
+                        additionalProperties:
+                          anyOf:
+                          - type: integer
+                          - type: string
+                          pattern: ^(\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))(([KMGTPE]i)|[numkMGTPE]|([eE](\+|-)?(([0-9]+(\.[0-9]*)?)|(\.[0-9]+))))?$
+                          x-kubernetes-int-or-string: true
+                        description: 'Requests describes the minimum amount of compute
+                          resources required. If Requests is omitted for a container,
+                          it defaults to Limits if that is explicitly specified, otherwise
+                          to an implementation-defined value. More info: https://kubernetes.io/docs/concepts/configuration/manage-compute-resources-container/'
+                        type: object
+                    type: object
+                required:
+                - chaincode
+                - couchdb
+                - peer
+                type: object
+              secret:
+                properties:
+                  enrollment:
+                    properties:
+                      component:
+                        properties:
+                          cahost:
+                            minLength: 1
+                            type: string
+                          caname:
+                            minLength: 1
+                            type: string
+                          caport:
+                            type: integer
+                          catls:
+                            properties:
+                              cacert:
+                                type: string
+                            required:
+                            - cacert
+                            type: object
+                          enrollid:
+                            minLength: 1
+                            type: string
+                          enrollsecret:
+                            minLength: 1
+                            type: string
+                        required:
+                        - cahost
+                        - caname
+                        - caport
+                        - catls
+                        - enrollid
+                        - enrollsecret
+                        type: object
+                      tls:
+                        properties:
+                          cahost:
+                            type: string
+                          caname:
+                            type: string
+                          caport:
+                            type: integer
+                          catls:
+                            properties:
+                              cacert:
+                                type: string
+                            required:
+                            - cacert
+                            type: object
+                          csr:
+                            properties:
+                              cn:
+                                type: string
+                              hosts:
+                                items:
+                                  type: string
+                                type: array
+                            type: object
+                          enrollid:
+                            type: string
+                          enrollsecret:
+                            type: string
+                        required:
+                        - cahost
+                        - caname
+                        - caport
+                        - catls
+                        - enrollid
+                        - enrollsecret
+                        type: object
+                    required:
+                    - component
+                    - tls
+                    type: object
+                required:
+                - enrollment
+                type: object
+              service:
+                properties:
+                  type:
+                    description: Service Type string describes ingress methods for
+                      a service
+                    enum:
+                    - NodePort
+                    - ClusterIP
+                    - LoadBalancer
+                    type: string
+                required:
+                - type
+                type: object
+              serviceMonitor:
+                nullable: true
+                properties:
+                  enabled:
+                    default: false
+                    type: boolean
+                  interval:
+                    default: 10s
+                    type: string
+                  labels:
+                    additionalProperties:
+                      type: string
+                    type: object
+                  sampleLimit:
+                    default: 0
+                    type: integer
+                  scrapeTimeout:
+                    default: 10s
+                    type: string
+                required:
+                - enabled
+                - interval
+                - sampleLimit
+                - scrapeTimeout
+                type: object
+              stateDb:
+                enum:
+                - couchdb
+                - leveldb
+                type: string
+              storage:
+                properties:
+                  chaincode:
+                    properties:
+                      accessMode:
+                        default: ReadWriteOnce
+                        type: string
+                      size:
+                        default: 5Gi
+                        type: string
+                      storageClass:
+                        default: ""
+                        type: string
+                    required:
+                    - accessMode
+                    - size
+                    type: object
+                  couchdb:
+                    properties:
+                      accessMode:
+                        default: ReadWriteOnce
+                        type: string
+                      size:
+                        default: 5Gi
+                        type: string
+                      storageClass:
+                        default: ""
+                        type: string
+                    required:
+                    - accessMode
+                    - size
+                    type: object
+                  peer:
+                    properties:
+                      accessMode:
+                        default: ReadWriteOnce
+                        type: string
+                      size:
+                        default: 5Gi
+                        type: string
+                      storageClass:
+                        default: ""
+                        type: string
+                    required:
+                    - accessMode
+                    - size
+                    type: object
+                required:
+                - chaincode
+                - couchdb
+                - peer
+                type: object
+              tag:
+                minLength: 1
+                type: string
+              updateCertificateTime:
+                format: date-time
+                nullable: true
+                type: string
+            required:
+            - couchdb
+            - discovery
+            - dockerSocketPath
+            - externalEndpoint
+            - external_chaincode_builder
+            - gossip
+            - hosts
+            - image
+            - logging
+            - mspID
+            - replicas
+            - resources
+            - secret
+            - service
+            - stateDb
+            - storage
+            - tag
+            type: object
+          status:
+            description: FabricPeerStatus defines the observed state of FabricPeer
+            properties:
+              conditions:
+                description: Conditions is a set of Condition instances.
+                items:
+                  description: "Condition represents an observation of an object's
+                    state. Conditions are an extension mechanism intended to be used
+                    when the details of an observation are not a priori known or would
+                    not apply to all instances of a given Kind. \n Conditions should
+                    be added to explicitly convey properties that users and components
+                    care about rather than requiring those properties to be inferred
+                    from other observations. Once defined, the meaning of a Condition
+                    can not be changed arbitrarily - it becomes part of the API, and
+                    has the same backwards- and forwards-compatibility concerns of
+                    any other part of the API."
+                  properties:
+                    lastTransitionTime:
+                      format: date-time
+                      type: string
+                    message:
+                      type: string
+                    reason:
+                      description: ConditionReason is intended to be a one-word, CamelCase
+                        representation of the category of cause of the current status.
+                        It is intended to be used in concise output, such as one-line
+                        kubectl get output, and in summarizing occurrences of causes.
+                      type: string
+                    status:
+                      type: string
+                    type:
+                      description: "ConditionType is the type of the condition and
+                        is typically a CamelCased word or short phrase. \n Condition
+                        types should indicate state in the \"abnormal-true\" polarity.
+                        For example, if the condition indicates when a policy is invalid,
+                        the \"is valid\" case is probably the norm, so the condition
+                        should be called \"Invalid\"."
+                      type: string
+                  required:
+                  - status
+                  - type
+                  type: object
+                type: array
+              lastCertificateUpdate:
+                format: date-time
+                nullable: true
+                type: string
+              message:
+                type: string
+              port:
+                type: integer
+              signCaCert:
+                type: string
+              signCert:
+                type: string
+              status:
+                type: string
+              tlsCaCert:
+                type: string
+              tlsCert:
+                type: string
+            required:
+            - conditions
+            - message
+            - status
+            type: object
+        type: object
+    served: true
+    storage: true
+    subresources:
+      status: {}
+status:
+  acceptedNames:
+    kind: ""
+    plural: ""
+  conditions: []
+  storedVersions: []
+---
+# Source: hlf-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: hlf-operator-manager-role
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - replicasets
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - nodes
+    verbs:
+      - get
+      - list
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - persistentvolumeclaims
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - pods
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - pods/log
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - pods/status
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - secrets
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - serviceaccounts
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - ""
+    resources:
+      - services
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - configmaps
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - deployments
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - persistentvolumeclaims
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - pods
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - pods/log
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - pods/status
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - secrets
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - apps
+    resources:
+      - services
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - extensions
+    resources:
+      - configmaps
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - extensions
+    resources:
+      - deployments
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - extensions
+    resources:
+      - persistentvolumeclaims
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - extensions
+    resources:
+      - pods
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - extensions
+    resources:
+      - pods/log
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - extensions
+    resources:
+      - pods/status
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - extensions
+    resources:
+      - secrets
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - extensions
+    resources:
+      - services
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - hlf.kungfusoftware.es
+    resources:
+      - fabricpeers
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - hlf.kungfusoftware.es
+    resources:
+      - fabricpeers/finalizers
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - hlf.kungfusoftware.es
+    resources:
+      - fabricpeers/status
+    verbs:
+      - get
+      - patch
+      - update
+
+  - apiGroups:
+      - hlf.kungfusoftware.es
+    resources:
+      - fabricorderernodes
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - hlf.kungfusoftware.es
+    resources:
+      - fabricorderernodes/finalizers
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - hlf.kungfusoftware.es
+    resources:
+      - fabricorderernodes/status
+    verbs:
+      - get
+      - patch
+      - update
+
+
+  - apiGroups:
+      - hlf.kungfusoftware.es
+    resources:
+      - fabricorderingservices
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - hlf.kungfusoftware.es
+    resources:
+      - fabricorderingservices/finalizers
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - hlf.kungfusoftware.es
+    resources:
+      - fabricorderingservices/status
+    verbs:
+      - get
+      - patch
+      - update
+
+
+  - apiGroups:
+      - hlf.kungfusoftware.es
+    resources:
+      - fabriccas
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - hlf.kungfusoftware.es
+    resources:
+      - fabriccas/finalizers
+    verbs:
+      - get
+      - patch
+      - update
+  - apiGroups:
+      - hlf.kungfusoftware.es
+    resources:
+      - fabriccas/status
+    verbs:
+      - get
+      - patch
+      - update
+
+
+  - apiGroups:
+      - networking.istio.io
+    resources:
+      - gateways
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - networking.istio.io
+    resources:
+      - virtualservices
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - monitoring.coreos.com
+    resources:
+      - servicemonitors
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - monitoring.coreos.com
+    resources:
+      - podmonitors
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - rbac.authorization.k8s.io
+    resources:
+      - clusterrolebindings
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+  - apiGroups:
+      - rbac.authorization.k8s.io
+    resources:
+      - clusterroles
+    verbs:
+      - create
+      - delete
+      - get
+      - list
+      - patch
+      - update
+      - watch
+---
+# Source: hlf-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRole
+metadata:
+  name: hlf-operator-proxy-role
+rules:
+  - apiGroups:
+      - authentication.k8s.io
+    resources:
+      - tokenreviews
+    verbs:
+      - create
+  - apiGroups:
+      - authorization.k8s.io
+    resources:
+      - subjectaccessreviews
+    verbs:
+      - create
+---
+# Source: hlf-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1beta1
+kind: ClusterRole
+metadata:
+  name: hlf-operator-metrics-reader
+rules:
+  - nonResourceURLs:
+      - /metrics
+    verbs:
+      - get
+---
+# Source: hlf-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: hlf-operator-manager-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: hlf-operator-manager-role
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: bigbang
+---
+# Source: hlf-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: hlf-operator-proxy-rolebinding
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: hlf-operator-proxy-role
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: bigbang
+---
+# Source: hlf-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: Role
+metadata:
+  name: hlf-operator-leader-election-role
+
+rules:
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps
+    verbs:
+      - get
+      - list
+      - watch
+      - create
+      - update
+      - patch
+      - delete
+  - apiGroups:
+      - ""
+    resources:
+      - configmaps/status
+    verbs:
+      - get
+      - update
+      - patch
+  - apiGroups:
+      - ""
+    resources:
+      - events
+    verbs:
+      - create
+      - patch
+---
+# Source: hlf-operator/templates/rbac.yaml
+apiVersion: rbac.authorization.k8s.io/v1
+kind: RoleBinding
+metadata:
+  name: hlf-operator-leader-election-rolebinding
+
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: Role
+  name: hlf-operator-leader-election-role
+subjects:
+  - kind: ServiceAccount
+    name: default
+---
+# Source: hlf-operator/templates/svc-metrics.yaml
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    helm.sh/chart: hlf-operator-0.1.0
+    app.kubernetes.io/name: hlf-operator
+    app.kubernetes.io/instance: hlf-operator
+    app.kubernetes.io/version: "1.16.0"
+    app.kubernetes.io/managed-by: Helm
+  name: hlf-operator-controller-manager-metrics-service
+spec:
+  ports:
+    - name: https
+      port: 8443
+      targetPort: https
+  selector:
+    app.kubernetes.io/name: hlf-operator
+    app.kubernetes.io/instance: hlf-operator
+---
+# Source: hlf-operator/templates/deployment.yaml
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+      helm.sh/chart: hlf-operator-0.1.0
+      app.kubernetes.io/name: hlf-operator
+      app.kubernetes.io/instance: hlf-operator
+      app.kubernetes.io/version: "1.16.0"
+      app.kubernetes.io/managed-by: Helm
+  name: hlf-operator-controller-manager
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app.kubernetes.io/name: hlf-operator
+      app.kubernetes.io/instance: hlf-operator
+  template:
+    metadata:
+      labels:
+        app.kubernetes.io/name: hlf-operator
+        app.kubernetes.io/instance: hlf-operator
+    spec:
+
+      containers:
+        - args:
+            - --secure-listen-address=0.0.0.0:8443
+            - --upstream=http://127.0.0.1:8080/
+            - --logtostderr=true
+            - --v=10
+          image: gcr.io/kubebuilder/kube-rbac-proxy:v0.5.0
+          name: kube-rbac-proxy
+          ports:
+            - containerPort: 8443
+              name: https
+        - args:
+            - --metrics-addr=127.0.0.1:8080
+            - --enable-leader-election
+          command:
+            - /hlf-operator
+          image: quay.io/kfsoftware/hlf-operator:v1.4.0
+          imagePullPolicy: Always
+          name: manager
+          resources:
+            {}
+      terminationGracePeriodSeconds: 10
