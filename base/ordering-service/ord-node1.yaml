@@ -1,0 +1,58 @@
+apiVersion: hlf.kungfusoftware.es/v1alpha1
+kind: FabricOrdererNode
+metadata:
+  creationTimestamp: null
+  name: ord-node1
+  namespace: fabric
+spec:
+  adminIstio:
+    ingressGateway: ingressgateway
+    port: 443
+  bootstrapMethod: none
+  channelParticipationEnabled: true
+  genesis: ""
+  hostAliases: []
+  image: hyperledger/fabric-orderer
+  istio:
+    ingressGateway: ingressgateway
+    port: 443
+  mspID: OrdererMSP
+  pullPolicy: Always
+  replicas: 1
+  resources: {}
+  secret:
+    enrollment:
+      component:
+        cahost: 54.89.160.237
+        caname: ca
+        caport: 32081
+        catls:
+          cacert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNTekNDQWZHZ0F3SUJBZ0lSQU0vaU1RSGhOVnFqT3k4UTlJRUhYcnN3Q2dZSUtvWkl6ajBFQXdJd1VqRVQKTUJFR0ExVUVCaE1LUTJGc2FXWnZjbTVwWVRFSk1BY0dBMVVFQnhNQU1Ra3dCd1lEVlFRSkV3QXhGREFTQmdOVgpCQW9UQzBoNWNHVnliR1ZrWjJWeU1ROHdEUVlEVlFRTEV3WkdZV0p5YVdNd0hoY05Nakl3TVRJMU1USTBOREE0CldoY05Nekl3TVRJMk1USTBOREE0V2pCU01STXdFUVlEVlFRR0V3cERZV3hwWm05eWJtbGhNUWt3QndZRFZRUUgKRXdBeENUQUhCZ05WQkFrVEFERVVNQklHQTFVRUNoTUxTSGx3WlhKc1pXUm5aWEl4RHpBTkJnTlZCQXNUQmtaaApZbkpwWXpCWk1CTUdCeXFHU000OUFnRUdDQ3FHU000OUF3RUhBMElBQkRNcWFzQzFaaU9lTjNYUmoxbE45MUdYClMrcEtBNTVVVW9xOG42dWpQelpWcHNWRjQxZHB3N2xBWHdMRE90aXJ3enNDaVQvNEIwVU1mTjBnOVNBcTdQYWoKZ2Fjd2dhUXdEZ1lEVlIwUEFRSC9CQVFEQWdHbU1CMEdBMVVkSlFRV01CUUdDQ3NHQVFVRkJ3TUNCZ2dyQmdFRgpCUWNEQVRBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUNrR0ExVWREZ1FpQkNBaTVYMHFzOENBK21QblN2OSsrRHA4CnNoY20wS3hHYmZGL3ZQOVR4aU9WWlRBM0JnTlZIUkVFTURBdWdnbHNiMk5oYkdodmMzU0NCbTl5WkMxallZSU4KYjNKa0xXTmhMbVpoWW5KcFk0Y0Vmd0FBQVljRU5sbWc3VEFLQmdncWhrak9QUVFEQWdOSUFEQkZBaUVBemZNQgpXd1hIYUhMc0JIT0FTRTk3WVdISUs3VFFQaUlPZmwzUUhDVlRUbjBDSUJDS1BCUHUzdTlDeFQ4RWcyQm8wbEZ3CkRQZGZSMGppVnBGamZqOTZqQmhECi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+        enrollid: orderer
+        enrollsecret: ordererpw
+      tls:
+        cahost: 54.89.160.237
+        caname: tlsca
+        caport: 32081
+        catls:
+          cacert: LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUNTekNDQWZHZ0F3SUJBZ0lSQU0vaU1RSGhOVnFqT3k4UTlJRUhYcnN3Q2dZSUtvWkl6ajBFQXdJd1VqRVQKTUJFR0ExVUVCaE1LUTJGc2FXWnZjbTVwWVRFSk1BY0dBMVVFQnhNQU1Ra3dCd1lEVlFRSkV3QXhGREFTQmdOVgpCQW9UQzBoNWNHVnliR1ZrWjJWeU1ROHdEUVlEVlFRTEV3WkdZV0p5YVdNd0hoY05Nakl3TVRJMU1USTBOREE0CldoY05Nekl3TVRJMk1USTBOREE0V2pCU01STXdFUVlEVlFRR0V3cERZV3hwWm05eWJtbGhNUWt3QndZRFZRUUgKRXdBeENUQUhCZ05WQkFrVEFERVVNQklHQTFVRUNoTUxTSGx3WlhKc1pXUm5aWEl4RHpBTkJnTlZCQXNUQmtaaApZbkpwWXpCWk1CTUdCeXFHU000OUFnRUdDQ3FHU000OUF3RUhBMElBQkRNcWFzQzFaaU9lTjNYUmoxbE45MUdYClMrcEtBNTVVVW9xOG42dWpQelpWcHNWRjQxZHB3N2xBWHdMRE90aXJ3enNDaVQvNEIwVU1mTjBnOVNBcTdQYWoKZ2Fjd2dhUXdEZ1lEVlIwUEFRSC9CQVFEQWdHbU1CMEdBMVVkSlFRV01CUUdDQ3NHQVFVRkJ3TUNCZ2dyQmdFRgpCUWNEQVRBUEJnTlZIUk1CQWY4RUJUQURBUUgvTUNrR0ExVWREZ1FpQkNBaTVYMHFzOENBK21QblN2OSsrRHA4CnNoY20wS3hHYmZGL3ZQOVR4aU9WWlRBM0JnTlZIUkVFTURBdWdnbHNiMk5oYkdodmMzU0NCbTl5WkMxallZSU4KYjNKa0xXTmhMbVpoWW5KcFk0Y0Vmd0FBQVljRU5sbWc3VEFLQmdncWhrak9QUVFEQWdOSUFEQkZBaUVBemZNQgpXd1hIYUhMc0JIT0FTRTk3WVdISUs3VFFQaUlPZmwzUUhDVlRUbjBDSUJDS1BCUHUzdTlDeFQ4RWcyQm8wbEZ3CkRQZGZSMGppVnBGamZqOTZqQmhECi0tLS0tRU5EIENFUlRJRklDQVRFLS0tLS0K
+        csr:
+          cn: ""
+          hosts:
+          - 127.0.0.1
+          - localhost
+          - 54.89.160.237
+          - ord-node1
+          - ord-node1.fabric
+        enrollid: orderer
+        enrollsecret: ordererpw
+  service:
+    type: NodePort
+  serviceMonitor: null
+  storage:
+    accessMode: ReadWriteOnce
+    size: 2Gi
+    storageClass: ""
+  tag: 2.4.1
+  updateCertificateTime: null
+

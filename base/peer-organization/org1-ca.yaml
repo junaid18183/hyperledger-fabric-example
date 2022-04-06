@@ -1,0 +1,158 @@
+apiVersion: hlf.kungfusoftware.es/v1alpha1
+kind: FabricCA
+metadata:
+  creationTimestamp: null
+  name: org1-ca
+  namespace: fabric
+spec:
+  ca:
+    bccsp:
+      default: SW
+      sw:
+        hash: SHA2
+        security: "256"
+    ca: null
+    cfg:
+      affiliations:
+        allowRemove: true
+      identities:
+        allowRemove: true
+    crl:
+      expiry: 24h
+    csr:
+      ca:
+        expiry: 131400h
+        pathLength: 0
+      cn: ca
+      hosts:
+      - localhost
+      names:
+      - C: US
+        L: ""
+        O: Hyperledger
+        OU: North Carolina
+        ST: ""
+    intermediate:
+      parentServer:
+        caName: ""
+        url: ""
+    name: ca
+    registry:
+      identities:
+      - affiliation: ""
+        attrs:
+          hf.AffiliationMgr: true
+          hf.GenCRL: true
+          hf.IntermediateCA: true
+          hf.Registrar.Attributes: '*'
+          hf.Registrar.DelegateRoles: '*'
+          hf.Registrar.Roles: '*'
+          hf.Revoker: true
+        name: enroll
+        pass: enrollpw
+        type: client
+      max_enrollments: -1
+    subject:
+      C: MS
+      L: Maharashtra
+      O: JuvenSys
+      OU: Tech
+      ST: Maharashtra
+      cn: ca
+    tlsCa: null
+  clrSizeLimit: 512000
+  cors:
+    enabled: false
+    origins: []
+  db:
+    datasource: fabric-ca-server.db
+    type: sqlite3
+  debug: false
+  hosts:
+  - localhost
+  - org1-ca
+  - org1-ca.fabric
+  image: hyperledger/fabric-ca
+  istio:
+    ingressGateway: ingressgateway
+    port: 443
+  metrics:
+    provider: prometheus
+    statsd:
+      address: 127.0.0.1:8125
+      network: udp
+      prefix: server
+      writeInterval: 10s
+  resources: {}
+  rootCA:
+    subject:
+      C: California
+      L: ""
+      O: Hyperledger
+      OU: Fabric
+      ST: ""
+      cn: ca
+  service:
+    type: NodePort
+  serviceMonitor: null
+  storage:
+    accessMode: ReadWriteOnce
+    size: 2Gi
+    storageClass: ""
+  tlsCA:
+    bccsp:
+      default: SW
+      sw:
+        hash: SHA2
+        security: "256"
+    ca: null
+    cfg:
+      affiliations:
+        allowRemove: true
+      identities:
+        allowRemove: true
+    crl:
+      expiry: 24h
+    csr:
+      ca:
+        expiry: 131400h
+        pathLength: 0
+      cn: tlsca
+      hosts:
+      - localhost
+      names:
+      - C: US
+        L: ""
+        O: Hyperledger
+        OU: North Carolina
+        ST: ""
+    intermediate:
+      parentServer:
+        caName: ""
+        url: ""
+    name: tlsca
+    registry:
+      identities:
+      - affiliation: ""
+        attrs:
+          hf.AffiliationMgr: true
+          hf.GenCRL: true
+          hf.IntermediateCA: true
+          hf.Registrar.Attributes: '*'
+          hf.Registrar.DelegateRoles: '*'
+          hf.Registrar.Roles: '*'
+          hf.Revoker: true
+        name: enroll
+        pass: enrollpw
+        type: client
+      max_enrollments: -1
+    subject:
+      C: MS
+      L: Maharashtra
+      O: JuvenSys
+      OU: Tech
+      ST: Maharashtra
+      cn: tlsca
+    tlsCa: null
+  version: 1.4.9
+
